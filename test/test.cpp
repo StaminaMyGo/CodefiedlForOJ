@@ -1,57 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 100005;
+string s;
 
-int l[N], r[N];
+// 判断区间类型
+char getType(int l, int r) {
+    bool has0 = false, has1 = false;
+    for(int i = l; i <= r; i++) {
+        if(s[i] == '0') has0 = true;
+        else has1 = true;
+    }
+    if(has0 && has1) return 'F';
+    if(has0) return 'B';
+    return 'I';
+}
 
-int main()
-{
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+// 递归构造 + 后序遍历
+void dfs(int l, int r) {
+    if(l == r) {
+        // 单个字符
+        if(s[l] == '0') cout << 'B';
+        else cout << 'I';
+        return;
+    }
 
+    int mid = (l + r) / 2;
+
+    // 左子树
+    dfs(l, mid);
+
+    // 右子树
+    dfs(mid + 1, r);
+
+    // 当前节点（后序）
+    cout << getType(l, r);
+}
+
+int main() {
     int n;
     cin >> n;
+    cin >> s;
 
-    int head = 1; // 初始只有1
-
-    for (int i = 2; i <= n; i++)
-    {
-        int x, p;
-        cin >> x >> p;
-
-        if (p == 0)
-        {
-            // 插入到 x 左边
-            l[i] = l[x];
-            r[i] = x;
-
-            if (l[x] != 0)
-                r[l[x]] = i;
-            l[x] = i;
-
-            if (l[i] == 0)
-                head = i;
-        }
-        else
-        {
-            // 插入到 x 右边
-            r[i] = r[x];
-            l[i] = x;
-
-            if (r[x] != 0)
-                l[r[x]] = i;
-            r[x] = i;
-        }
-    }
-
-    // 输出
-    int cur = head;
-    while (cur != 0)
-    {
-        cout << cur << " ";
-        cur = r[cur];
-    }
+    dfs(0, s.size() - 1);
 
     return 0;
 }
