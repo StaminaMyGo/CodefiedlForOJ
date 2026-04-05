@@ -1,44 +1,31 @@
 #include <iostream>
-#include <algorithm>
 using namespace std;
-
 struct Node
 {
     int left;
     int right;
+
 } tree[55];
-
 int diameter = 0;
-
-// 返回以root为根的树的高度，并更新直径
 int dfs(int root)
 {
     if (root == 0)
         return 0;
-
     int leftHeight = dfs(tree[root].left);
     int rightHeight = dfs(tree[root].right);
-
-    // 更新直径：经过当前节点的最长路径
     diameter = max(diameter, leftHeight + rightHeight);
-
-    // 返回当前节点的高度
     return max(leftHeight, rightHeight) + 1;
 }
-
 int main()
 {
     int n;
     cin >> n;
-
-    // 初始化
     for (int i = 1; i <= n; i++)
     {
         tree[i].left = 0;
+
         tree[i].right = 0;
     }
-
-    // 读入父子关系
     for (int i = 1; i < n; i++)
     {
         int x, y;
@@ -52,9 +39,7 @@ int main()
             tree[x].right = y;
         }
     }
-
     dfs(1);
     cout << diameter << endl;
-
     return 0;
 }
