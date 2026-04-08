@@ -1,60 +1,43 @@
 #include <iostream>
+#include <vector>
 #include <algorithm>
 using namespace std;
 
-struct Node
-{
-    int left;
-    int right;
-} tree[55];
-
-int diameter = 0;
-
-// 返回以root为根的树的高度，并更新直径
-int dfs(int root)
-{
-    if (root == 0)
-        return 0;
-
-    int leftHeight = dfs(tree[root].left);
-    int rightHeight = dfs(tree[root].right);
-
-    // 更新直径：经过当前节点的最长路径
-    diameter = max(diameter, leftHeight + rightHeight);
-
-    // 返回当前节点的高度
-    return max(leftHeight, rightHeight) + 1;
-}
-
 int main()
 {
-    int n;
+    int n, m;
     cin >> n;
 
-    // 初始化
-    for (int i = 1; i <= n; i++)
-    {
-        tree[i].left = 0;
-        tree[i].right = 0;
-    }
+    vector<int> A(n);
+    for (int i = 0; i < n; i++)
+        cin >> A[i];
 
-    // 读入父子关系
-    for (int i = 1; i < n; i++)
-    {
-        int x, y;
-        cin >> x >> y;
-        if (tree[x].left == 0)
-        {
-            tree[x].left = y;
-        }
-        else
-        {
-            tree[x].right = y;
-        }
-    }
+    cin >> m;
+    vector<int> B(m);
+    for (int i = 0; i < m; i++)
+        cin >> B[i];
 
-    dfs(1);
-    cout << diameter << endl;
+    // 输出A
+    cout << "List A:";
+    for (int x : A)
+        cout << x << " ";
+    cout << endl;
+
+    // 输出B
+    cout << "List B:";
+    for (int x : B)
+        cout << x << " ";
+    cout << endl;
+
+    // 合并
+    vector<int> C = A;
+    C.insert(C.end(), B.begin(), B.end());
+    sort(C.begin(), C.end());
+    // 输出C
+    cout << "List C:";
+    for (int x : C)
+        cout << x << " ";
+    cout << endl;
 
     return 0;
 }
