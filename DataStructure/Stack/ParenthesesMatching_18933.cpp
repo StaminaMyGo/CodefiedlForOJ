@@ -6,20 +6,16 @@ using namespace std;
 int main()
 {
     char s[205];
-
     while (cin >> s)
     {
         int len = strlen(s);
         stack<int> st;
         char mark[205];
 
-        // 初始化标记数组为空格
         for (int i = 0; i < len; i++)
         {
             mark[i] = ' ';
         }
-
-        // 遍历字符串
         for (int i = 0; i < len; i++)
         {
             if (s[i] == '(')
@@ -30,31 +26,26 @@ int main()
             {
                 if (!st.empty())
                 {
-                    st.pop(); // 匹配成功
+                    /* code */
+                    st.pop();
                 }
                 else
                 {
-                    mark[i] = '?'; // 多余的右括号
+                    mark[i] = '?';
                 }
             }
         }
-
-        // 栈中剩余的是未匹配的左括号
         while (!st.empty())
         {
+            /* code */
             mark[st.top()] = '$';
             st.pop();
         }
-
-        // 输出
         cout << s << endl;
         for (int i = 0; i < len; i++)
         {
             cout << mark[i];
         }
-        cout << endl;
     }
-    // cout << "helloworld" << endl;
-
     return 0;
 }

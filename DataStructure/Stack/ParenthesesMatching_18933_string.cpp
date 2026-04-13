@@ -1,23 +1,17 @@
 #include <iostream>
 #include <stack>
-#include <cstring>
+#include <string>
 using namespace std;
 
 int main()
 {
-    char s[205];
+    string s;
 
     while (cin >> s)
     {
-        int len = strlen(s);
+        int len = s.size();
         stack<int> st;
-        char mark[205];
-
-        // 初始化标记数组为空格
-        for (int i = 0; i < len; i++)
-        {
-            mark[i] = ' ';
-        }
+        string mark(len, ' '); // 直接初始化为全空格
 
         // 遍历字符串
         for (int i = 0; i < len; i++)
@@ -48,13 +42,8 @@ int main()
 
         // 输出
         cout << s << endl;
-        for (int i = 0; i < len; i++)
-        {
-            cout << mark[i];
-        }
-        cout << endl;
+        cout << mark << endl;
     }
-    // cout << "helloworld" << endl;
 
     return 0;
 }
